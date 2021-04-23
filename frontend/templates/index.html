@@ -1,0 +1,19 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLICKER 007</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="{% static 'js/index.js' %}"></script>
+</head>
+<body>
+    <div class="flex-center">
+        <h1>CLICKER</h1>
+        <p id="counter">{{maincycle.coins_count}}</p>
+        <button onclick="call_click()">CLICK ME BEAAACH</button>
+    </div>
+</body>
+</html>
