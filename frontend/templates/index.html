@@ -10,6 +10,7 @@
     <script src="{% static 'js/index.js' %}"></script>
 </head>
 <body>
+    <a href="{% url 'logout' %}">logout</a>
     <div class="flex-center">
         <h1>CLICKER</h1>
         <p id="counter">{{maincycle.coins_count}}</p>
