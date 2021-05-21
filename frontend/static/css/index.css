@@ -2,6 +2,11 @@ body {
     margin: 0;
 }
 
+p {
+    margin: 0;
+    padding: 0;
+}
+
 .flex-center {
     display: flex;
     justify-content: center;
@@ -14,3 +19,58 @@ body {
     color: red;
     font-weight: 600;
 }
+
+.click-container {
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3vh 0;
+}
+
+.click-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: fit-content;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+}
+
+.click-holder img {
+    height: 100%;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+.boost-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.boost-holder {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.boost {
+    width: 80px;
+    height: 80px;
+    background: burlywood;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+

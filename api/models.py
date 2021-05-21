@@ -9,3 +9,24 @@ class MainCycle(models.Model):
 
     def click(self):
         self.coins_count += self.click_power
+
+
+class Boost(models.Model):
+    main_cycle = models.ForeignKey(MainCycle, null=False, on_delete=models.CASCADE)
+    power = models.IntegerField(default=1)
+    price = models.IntegerField(default=10)
+    level = models.IntegerField(default=0)
+
+    def update_boost(self):
+        if self.main_cycle.coins_count < self.price:
+            return False
+        
+        self.main_cycle.coins_count -= self.price
+        self.main_cycle.click_power += self.power
+        self.main_cycle.save()
+
+        self.level += 1
+        self.power *= 2
+        self.price *= 5
+
+        return self

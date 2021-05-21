@@ -13,8 +13,26 @@
     <a href="{% url 'logout' %}">logout</a>
     <div class="flex-center">
         <h1>CLICKER</h1>
-        <p id="counter">{{maincycle.coins_count}}</p>
-        <button onclick="call_click()">CLICK ME BEAAACH</button>
+        <div class="click-container">
+            <p id="counter">{{main_cycle.coins_count}}</p>
+            <button class="click-holder" onclick="call_click()">
+                <img id="click-image" src="{% static 'imgs/kakashi.png' %}" alt="">
+            </button>
+            <span id="click_power">{{main_cycle.click_power}}</span>
+        </div>
+
+        <div class="boost-container">                
+            <h3>Boosts</h3>
+            <div class="boost-holder" id="boost-holder">
+                {% for boost in boosts %}
+                    <button class="boost" id="boost_{{boost.id}}" onclick="update_boost({{boost.id}})">
+                        <p>lvl: <span id="boost_level">{{boost.level}}</span></p>
+                        <p>pow: +<span id="boost_power">{{boost.power}}</span></p>
+                        <p>buy: <span id="boost_price">{{boost.price}}</span></p>
+                    </button>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </body>
 </html>
