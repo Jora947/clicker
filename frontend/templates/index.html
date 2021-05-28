@@ -10,26 +10,40 @@
     <script src="{% static 'js/index.js' %}"></script>
 </head>
 <body>
-    <a href="{% url 'logout' %}">logout</a>
-    <div class="flex-center">
-        <h1>CLICKER</h1>
+    <div class="container">
+        <aside class="menu-container">
+            <div>super clicker</div>
+            <div>hello, {{user.username}}</div>
+            <a href="{% url 'logout' %}">logout</a>
+        </aside>
+
         <div class="click-container">
             <p id="counter">{{main_cycle.coins_count}}</p>
             <button class="click-holder" onclick="call_click()">
                 <img id="click-image" src="{% static 'imgs/kakashi.png' %}" alt="">
             </button>
             <span id="click_power">{{main_cycle.click_power}}</span>
+            <div>+<span id="auto_click_power">{{main_cycle.auto_click_power}}</span>/s</div>
         </div>
 
         <div class="boost-container">                
             <h3>Boosts</h3>
             <div class="boost-holder" id="boost-holder">
                 {% for boost in boosts %}
-                    <button class="boost" id="boost_{{boost.id}}" onclick="update_boost({{boost.id}})">
-                        <p>lvl: <span id="boost_level">{{boost.level}}</span></p>
-                        <p>pow: +<span id="boost_power">{{boost.power}}</span></p>
-                        <p>buy: <span id="boost_price">{{boost.price}}</span></p>
-                    </button>
+                    {% if boost.boost_type == 0 %}
+                        <button class="boost" id="boost_{{boost.id}}" onclick="update_boost({{boost.id}})">
+                            <p>lvl: <span id="boost_level">{{boost.level}}</span></p>
+                            <p>pow: +<span id="boost_power">{{boost.power}}</span></p>
+                            <p>buy: <span id="boost_price">{{boost.price}}</span></p>
+                        </button>
+                    {% endif %}
+                    {% if boost.boost_type == 1 %}
+                        <button class="boost auto" id="boost_{{boost.id}}" onclick="update_boost({{boost.id}})">
+                            <p>lvl: <span id="boost_level">{{boost.level}}</span></p>
+                            <p>pow: +<span id="boost_power">{{boost.power}}</span></p>
+                            <p>buy: <span id="boost_price">{{boost.price}}</span></p>
+                        </button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

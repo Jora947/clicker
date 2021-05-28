@@ -1,3 +1,37 @@
+window.onload = function() {
+    set_auto_click()
+}
+
+function set_auto_click() {
+    setInterval(function() {
+        const coins_node = document.getElementById('counter')
+        const auto_click_node = document.getElementById('auto_click_power')
+        coins_node.innerText = parseInt(coins_node.innerText) + parseInt(auto_click_node.innerText)
+        update_coins(parseInt(coins_node.innerText))
+    }, 1000)
+}
+
+function update_coins(coins) {
+    const csrftoken = getCookie('csrftoken')
+
+    fetch('api/update_coins/', {
+        method: 'POST',
+        headers: {
+            "X-CSRFToken": csrftoken,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            coins: coins
+        })
+    }).then(response => {
+        if (response.ok) return response.json()
+        else return Promise.reject(response)
+    }).then(data => {
+        // console.log(data)
+    }).catch(err => console.log(err))
+}
+
+
 function call_click() {
     const click_node = document.getElementById('click-image')
     click_animation(click_node, 50)
@@ -8,7 +42,11 @@ function call_click() {
         if (response.ok) return response.json()
         else return Promise.reject(response)
     }).then(data => {
-        document.getElementById('counter').innerText = data
+        document.getElementById('counter').innerText = data.main_cycle.coins_count
+
+        if (data.boost) {
+            add_boost(data.boost)
+        }
     }).catch(err => console.log(err))
 }
 
@@ -30,6 +68,7 @@ function update_boost(boost_id) {
     }).then(data => {
         document.getElementById('counter').innerText = data.main_cycle.coins_count
         document.getElementById('click_power').innerText = data.main_cycle.click_power
+        document.getElementById('auto_click_power').innerText = data.main_cycle.auto_click_power
         
         render_boost(data.boost)
     }).catch(err => console.log(err))
@@ -40,6 +79,24 @@ function render_boost(boost) {
     button.querySelector('#boost_level').innerText = boost.level
     button.querySelector('#boost_power').innerText = boost.power
     button.querySelector('#boost_price').innerText = boost.price
+}
+
+function add_boost(boost) {
+    let boost_holder = document.getElementById('boost-holder')
+    const button = document.createElement('button')
+    button.setAttribute('class', 'boost')
+    if (boost.boost_type == 1) 
+        button.setAttribute('class', 'boost auto')
+    
+    button.setAttribute('id', `boost_${boost.id}`)
+    button.setAttribute('onclick', `update_boost(${boost.id})`)
+    
+    button.innerHTML = `
+        <p>lvl: <span id="boost_level">${boost.level}</span></p>
+        <p>pow: +<span id="boost_power">${boost.power}</span></p>
+        <p>buy: <span id="boost_price">${boost.price}</span></p>
+    `
+    boost_holder.appendChild(button)
 }
 
 function click_animation(node, time_ms) {

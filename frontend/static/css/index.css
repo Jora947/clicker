@@ -19,7 +19,20 @@ p {
     color: red;
     font-weight: 600;
 }
+.container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: 100vh;
+}
 
+.menu-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 .click-container {
     display: flex;
     flex: 2;
@@ -59,7 +72,6 @@ p {
 .boost-holder {
     display: flex;
     flex-direction: row;
-    flex: 1;
     flex-wrap: wrap;
 }
 
@@ -74,3 +86,6 @@ p {
     border-radius: 20px;
 }
 
+.auto {
+    background: hotpink;
+}

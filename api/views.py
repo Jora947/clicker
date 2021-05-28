@@ -24,10 +24,25 @@ def index(request):
 @api_view(['GET'])
 def call_click(request):
     maincycle = MainCycle.objects.get(user=request.user)
-    maincycle.click()
+    is_level_up = maincycle.click()
     maincycle.save()
+
+    if is_level_up:
+        boost_type = 0
+        if maincycle.level % 3 == 0:
+            boost_type = 1
+
+        boost = Boost(main_cycle=maincycle, power=maincycle.level*20, price=maincycle.level*50, boost_type=boost_type)
+        boost.save()
+
+        return Response({
+            'main_cycle': MainCycleSerializer(maincycle).data,
+            'boost': BoostSerializer(boost).data,
+        })
     
-    return Response(maincycle.coins_count)
+    return Response({
+        'main_cycle': MainCycleSerializer(maincycle).data
+    })
 
 
 @api_view(['POST'])
@@ -44,6 +59,16 @@ def update_boost(request):
         'main_cycle': MainCycleSerializer(main_cycle).data,
         'boost': BoostSerializer(boost).data,
     })
+
+
+@api_view(['POST'])
+def update_coins(request):
+    coins = request.data['coins']
+    main_cycle = MainCycle.objects.get(user=request.user)
+    main_cycle.coins_count = coins
+    main_cycle.save()
+
+    return Response({'success': 'coins was updated'}, status=200)
 
 
 def register(request):

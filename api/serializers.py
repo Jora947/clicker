@@ -9,4 +9,4 @@ class MainCycleSerializer(ModelSerializer):
 class BoostSerializer(ModelSerializer):
     class Meta:
         model = Boost
-        fields = ['id', 'power', 'price', 'level']
+        fields = ['id', 'power', 'price', 'level', 'boost_type']
